@@ -1,67 +1,60 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace SyntacticSugarInCSharp
 {
     class Program
     {
-        static void Main(string[] args) { }
-            public class Bug
+        static void Main(string[] args)
+        {
+            var hornedBeetlePredators = new List<string>()
             {
-                /*
-                    You can declare a typed public property, make it read-only,
-                    and initialize it with a default value all on the same
-                    line of code in C#. Readonly properties can be set in the
-                    class' constructors, but not by external code.
-                */
-                public string Name { get; } = "";
-                public string Species { get; } = "";
-                public List<string> Predators { get; } = new List<string>();
-                public List<string> Prey { get; } = new List<string>();
+                "click beetles",
+                "flat bark beetles",
+                "clerid beetles",
+                "ambush bugs",
+                "thrips",
+                "assassin bugs",
+                "carpenter ants",
+                "wasps"
+            };
 
-                // Convert this readonly property to an expression member
-                public string FormalName
-                {
-                    get
-                    {
-                        return $"{this.Name} the {this.Species}";
-                    }
-                }
+            var hornedBeetlePrey = new List<string>()
+            {
+                "birch",
+                "chestnut",
+                "green ash",
+                "maple"
+            };
 
-                // Class constructor
-                public Bug(string name, string species, List<string> predators, List<string> prey)
-                {
-                    this.Name = name;
-                    this.Species = species;
-                    this.Predators = predators;
-                    this.Prey = prey;
-                }
+            var mantisPredators = new List<string>()
+            {
+                "frogs",
+                "bats",
+                "monkeys",
+                "larger birds",
+                "spiders",
+                "snakes"
+            };
 
-                // Convert this method to an expression member
-                public string PreyList()
-                {
-                    var commaDelimitedPrey = string.Join(",", this.Prey);
-                    return commaDelimitedPrey;
-                }
+            var mantisPrey = new List<string>()
+            {
+                "lizards",
+                "crickets",
+                "moths",
+                "flies",
+                "flour worms",
+                "other large insects they can catch"
+            };
 
-                // Convert this method to an expression member
-                public string PredatorList()
-                {
-                    var commaDelimitedPredators = string.Join(",", this.Predators);
-                    return commaDelimitedPredators;
-                }
+            var beetle = new Bug("Horned Beetle", "Anoplophora glabripennis", hornedBeetlePredators, hornedBeetlePrey);
+            var mantis = new Bug("Dead Leaf Mantis", "Deroplatys desiccata", mantisPredators, mantisPrey);
 
-                // Convert this to expression method
-                public string Eat(string food)
-                {
-                    if (this.Prey.Contains(food))
-                    {
-                        return $"{this.Name} ate the {food}.";
-                    }
-                    else
-                    {
-                        return $"{this.Name} is still hungry.";
-                    }
-                }
-            }
+            Console.WriteLine(beetle.Eat("maple"));
+            Console.WriteLine(mantis.Eat("steak"));
+            Console.WriteLine($"{mantis.FormalName} loves to eat {mantis.PreyList()}");
+            Console.WriteLine($"Take cover {beetle.FormalName}! Here come the {beetle.PredatorList()}");
+        }
+
     }
 }
